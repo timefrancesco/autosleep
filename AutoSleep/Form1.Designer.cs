@@ -35,6 +35,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.mynotifyicon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.fullscreenChk = new System.Windows.Forms.CheckBox();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -67,9 +69,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.fullscreenChk);
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(143, 117);
+            this.groupBox1.Size = new System.Drawing.Size(153, 126);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             // 
@@ -81,11 +84,23 @@
             this.mynotifyicon.Click += new System.EventHandler(this.mynotifyicon_Click);
             this.mynotifyicon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.mynotifyicon_MouseDoubleClick);
             // 
+            // fullscreenChk
+            // 
+            this.fullscreenChk.AutoSize = true;
+            this.fullscreenChk.Checked = true;
+            this.fullscreenChk.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.fullscreenChk.Location = new System.Drawing.Point(12, 99);
+            this.fullscreenChk.Name = "fullscreenChk";
+            this.fullscreenChk.Size = new System.Drawing.Size(117, 17);
+            this.fullscreenChk.TabIndex = 0;
+            this.fullscreenChk.Text = "Disable if fullscreen";
+            this.fullscreenChk.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(168, 142);
+            this.ClientSize = new System.Drawing.Size(178, 151);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.SecsTbox);
             this.Controls.Add(this.button1);
@@ -96,6 +111,8 @@
             this.Name = "Form1";
             this.Text = "Sleep";
             this.Resize += new System.EventHandler(this.Form1_Resize);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -108,6 +125,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.NotifyIcon mynotifyicon;
+        private System.Windows.Forms.CheckBox fullscreenChk;
     }
 }
 

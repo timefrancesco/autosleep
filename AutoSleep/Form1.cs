@@ -77,8 +77,11 @@ namespace AutoSleep
 
             var lastInput = IdleTimeFinder.GetLastInputTime(); //last input in milliseconds
 
+            bool isFullscreen = false;
+            if (fullscreenChk.Checked)
+                isFullscreen = IsForegroundFullScreen();
 
-            if (lastInput > _intervalInSecs*1000) 
+            if (lastInput > _intervalInSecs * 1000 && isFullscreen) 
             {
                 Stop();
                 Application.SetSuspendState(PowerState.Suspend, true, true);
@@ -117,7 +120,47 @@ namespace AutoSleep
             Console.WriteLine("RESTART TIMER");
             Start();
         }
-      
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct RECT
+        {
+            public int left;
+            public int top;
+            public int right;
+            public int bottom;
+        }
+
+        [DllImport("user32.dll")]
+        private static extern bool GetWindowRect(HandleRef hWnd, [In, Out] ref RECT rect);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        public static bool IsForegroundFullScreen()
+        {
+            bool fullscreen = false ;
+
+            foreach (var screen in Screen.AllScreens)
+            {
+               fullscreen|= IsForegroundFullScreen(screen);
+            }
+
+            Console.WriteLine("checking fullscreen = {0}", fullscreen);
+            return fullscreen;
+        }
+
+        public static bool IsForegroundFullScreen(Screen screen)
+        {
+            if (screen == null)
+            {
+                screen = Screen.PrimaryScreen;
+            }
+            RECT rect = new RECT();
+            GetWindowRect(new HandleRef(null, GetForegroundWindow()), ref rect);
+            return new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top).Contains(screen.Bounds);
+        }
+
 
         internal struct LASTINPUTINFO
         {
