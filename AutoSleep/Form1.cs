@@ -77,14 +77,19 @@ namespace AutoSleep
 
             var lastInput = IdleTimeFinder.GetLastInputTime(); //last input in milliseconds
 
-            bool isFullscreen = false;
-            if (fullscreenChk.Checked)
-                isFullscreen = IsForegroundFullScreen();
+            
 
-            if (lastInput > _intervalInSecs * 1000 && isFullscreen) 
+            if (lastInput > _intervalInSecs * 1000) 
             {
-                Stop();
-                Application.SetSuspendState(PowerState.Suspend, true, true);
+                bool isFullscreen = false;
+                if (fullscreenChk.Checked)
+                    isFullscreen = IsForegroundFullScreen();
+
+                if (!isFullscreen)
+                {
+                    Stop();
+                    Application.SetSuspendState(PowerState.Suspend, false, true);
+                }
             }
         }
 
